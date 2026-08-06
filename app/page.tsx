@@ -62,7 +62,7 @@ const Header = () => {
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center relative z-50">
-            <Image src="https://i.postimg.cc/kXVXyyqv/logo-sem-fundo-cortada-redimensionada.png" alt="Logo Banco de Leite" width={264} height={78} className="object-contain h-20 w-auto" priority />
+            <Image src="/images/logo.png" alt="Logo Banco de Leite" width={264} height={78} className="object-contain h-20 w-auto" priority />
           </Link>
 
           {/* Desktop Nav */}
@@ -123,7 +123,7 @@ const Hero = () => {
     <section id="home" className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden flex items-center justify-center min-h-[85vh]">
       <div className="absolute inset-0 z-0">
         <Image 
-          src="https://i.postimg.cc/PJWSB5pM/hero-editada-v2.png" 
+          src="/images/hero.png" 
           alt="Hero Banner Banco de Leite" 
           fill 
           className="object-cover"
@@ -201,7 +201,7 @@ const About = () => {
               className="aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl shadow-black/5 relative z-0"
             >
               <Image 
-                src="https://i.postimg.cc/BQdZ71v5/foto-sobre.png" 
+                src="/images/sobre.png" 
                 alt="História do Banco de Leite" 
                 fill 
                 className="object-cover"
@@ -252,17 +252,17 @@ const Projects = () => {
     {
       title: "Educação e Apoio às Famílias Doadoras",
       desc: "Nossa equipe especializada orienta um grupo de mães sobre a importância da doação de leite humano e os cuidados no processo de coleta e armazenamento. O Banco de Leite Humano de Taubaté oferece todo o suporte necessário para que esse gesto de amor chegue com segurança aos bebês que mais precisam. 💧 Cada gota doada pode salvar uma vida.",
-      img: "https://i.postimg.cc/fT3TvvDr/primeira-carrossel.jpg"
+      img: "/images/carrossel-1.jpg"
     },
     {
       title: "Coleta e Transporte Seguro de Leite Humano",
       desc: "O Banco de Leite de Taubaté realiza um trabalho essencial para salvar vidas. Nesta etapa do projeto, nossa equipe é responsável pela coleta e transporte do leite humano doado, garantindo que todo o processo aconteça com segurança, higiene e respeito às normas sanitárias. Cada frasco doado é um gesto de amor que faz diferença na recuperação e nutrição de bebês prematuros e recém-nascidos internados.",
-      img: "https://i.postimg.cc/tC1Czz9C/segunda-carrossel.jpg"
+      img: "/images/carrossel-2.jpg"
     },
     {
       title: "Análise e Pasteurização do Leite Humano",
       desc: "Após a coleta, o leite humano passa por rigorosos processos de análise e pasteurização, garantindo sua segurança e qualidade antes de chegar aos bebês que mais precisam. Nossa equipe realiza todo o trabalho com cuidado, técnica e amor, assegurando que cada gota de leite doado seja aproveitada da melhor forma possível.",
-      img: "https://i.postimg.cc/15g5KKyy/terceira-carrossel.jpg"
+      img: "/images/carrossel-3.jpg"
     }
   ];
 
@@ -482,7 +482,7 @@ const Donation = () => {
             </div>
             
             <div className="relative aspect-square md:aspect-[4/5] rounded-[2rem] overflow-hidden shadow-lg border border-gray-100">
-              <Image src="https://i.postimg.cc/5t7bWHm3/QR-code.jpg" alt="Doação via PIX" fill className="object-cover" referrerPolicy="no-referrer" />
+              <Image src="/images/qr-code.jpg" alt="Doação via PIX" fill className="object-cover" referrerPolicy="no-referrer" />
             </div>
           </div>
         </motion.div>
@@ -519,8 +519,11 @@ const Contact = () => {
                   <Phone className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-slate-900 mb-2">Telefone</h4>
-                  <a href="tel:+551236246814" className="text-slate-600 hover:text-primary transition-colors text-lg">(12) 3624-6814</a>
+                  <h4 className="text-lg font-semibold text-slate-900 mb-2">Telefones (WhatsApp)</h4>
+                  <div className="flex flex-col gap-1">
+                    <a href="https://wa.me/5512981299196" target="_blank" rel="noreferrer" className="text-slate-600 hover:text-primary transition-colors text-lg">Banco de Leite: (12) 98129-9196</a>
+                    <a href="https://wa.me/5512981623360" target="_blank" rel="noreferrer" className="text-slate-600 hover:text-primary transition-colors text-lg">Casa da Criança: (12) 98162-3360</a>
+                  </div>
                 </div>
               </div>
               <div className="flex gap-6">
@@ -529,7 +532,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold text-slate-900 mb-2">E-mail</h4>
-                  <a href="mailto:blhtaubate@gmail.com" className="text-slate-600 hover:text-primary transition-colors">blhtaubate@gmail.com</a>
+                  <a href="mailto:bancodeleite.site43@gmail.com" className="text-slate-600 hover:text-primary transition-colors">bancodeleite.site43@gmail.com</a>
                 </div>
               </div>
               <div className="flex gap-6">
@@ -631,7 +634,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center mb-6 bg-white p-3 rounded-2xl w-fit">
-              <Image src="https://i.postimg.cc/kXVXyyqv/logo-sem-fundo-cortada-redimensionada.png" alt="Logo Banco de Leite" width={264} height={78} className="object-contain h-16 w-auto" />
+              <Image src="/images/logo.png" alt="Logo Banco de Leite" width={264} height={78} className="object-contain h-16 w-auto" />
             </Link>
             <p className="text-white/80 text-sm leading-relaxed mb-6">
               Um legado de amor que começou em 1943, cuidando de gerações com pioneirismo em saúde infantil e maternidade.
@@ -665,12 +668,15 @@ const Footer = () => {
                   <span>Rua Dr. José Luís de Almeida Soares, 35 - Taubaté/SP</span>
                 </li>
                 <li className="flex gap-3">
-                  <Phone className="w-4 h-4 shrink-0 mt-0.5" />
-                  <span>(12) 3624-6814</span>
+                  <Phone className="w-4 h-4 shrink-0 mt-1" />
+                  <div className="flex flex-col gap-2">
+                    <a href="https://wa.me/5512981299196" target="_blank" rel="noreferrer" className="hover:text-primary-light transition-colors">Banco de Leite: (12) 98129-9196</a>
+                    <a href="https://wa.me/5512981623360" target="_blank" rel="noreferrer" className="hover:text-primary-light transition-colors">Casa da Criança: (12) 98162-3360</a>
+                  </div>
                 </li>
                 <li className="flex gap-3">
                   <Mail className="w-4 h-4 shrink-0 mt-0.5" />
-                  <span>blhtaubate@gmail.com</span>
+                  <span>bancodeleite.site43@gmail.com</span>
                 </li>
              </ul>
           </div>

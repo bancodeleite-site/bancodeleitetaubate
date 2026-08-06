@@ -288,8 +288,8 @@ export default function TransparenciaPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF7] font-sans text-gray-900 pb-20">
-      <div className="max-w-3xl mx-auto px-5 pt-10">
+    <div className="min-h-screen bg-[#FAFAF7] font-sans text-gray-900 flex flex-col">
+      <div className="max-w-3xl mx-auto px-5 pt-10 flex flex-col flex-1 w-full">
         
         <div className="mb-6">
           <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-primary transition-colors">
@@ -355,6 +355,12 @@ export default function TransparenciaPage() {
           )}
         </AnimatePresence>
 
+        {/* Footer */}
+        <div className="mt-auto pt-8 pb-8 border-t border-gray-200 text-center w-full">
+          <p className="text-sm text-gray-400">
+            © {new Date().getFullYear()} Banco de Leite Humano. Todos os direitos reservados.
+          </p>
+        </div>
       </div>
     </div>
   );

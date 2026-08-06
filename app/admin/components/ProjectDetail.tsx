@@ -115,7 +115,7 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
 
   // Upload inline
   const [showUpload, setShowUpload] = useState(false);
-  const [uploadTipo, setUploadTipo] = useState('circunstanciado');
+  const [uploadTipo, setUploadTipo] = useState('');
   const [uploadAno, setUploadAno] = useState(new Date().getFullYear().toString());
   const [uploadMes, setUploadMes] = useState((new Date().getMonth() + 1).toString());
   const [uploadNome, setUploadNome] = useState('');
@@ -146,7 +146,10 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
 
   const handleUploadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!uploadFile || !uploadNome) { setUploadError('Preencha todos os campos.'); return; }
+    if (!uploadFile) return setUploadError('Selecione um arquivo.');
+    if (!uploadNome) return setUploadError('Digite um nome para o arquivo.');
+    if (!uploadTipo) return setUploadError('Selecione o tipo de documento.');
+
     setUploadLoading(true);
     setUploadError('');
     try {
@@ -427,8 +430,9 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
               <form onSubmit={handleUploadSubmit} className="space-y-4">
                 <div>
                   <label className="block text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Tipo de Documento</label>
-                  <select value={uploadTipo} onChange={e => setUploadTipo(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-[#2B6B43] outline-none text-sm">
+                  <select value={uploadTipo} onChange={e => setUploadTipo(e.target.value)} required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-primary outline-none text-sm">
+                    <option value="" disabled>Selecione um tipo de documento</option>
                     <option value="termo">Termo de Colaboração / Plano de Trabalho</option>
                     <option value="circunstanciado">Relatório Circunstanciado</option>
                     <option value="financeiro">Relatório Financeiro</option>
