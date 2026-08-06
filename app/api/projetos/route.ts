@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
+import { deleteFileFromDrive } from '@/lib/google-drive';
 
 // Helper de autenticação
 async function checkAuth(req: NextRequest) {
@@ -52,6 +53,23 @@ export async function DELETE(req: NextRequest) {
 
     if (!id) return NextResponse.json({ error: 'ID ausente' }, { status: 400 });
 
+    // 1. Buscar documentos do projeto para excluir no Drive
+    const { data: documentos } = await supabaseAdmin.from('documentos').select('drive_id').eq('id_projeto', id);
+    
+    // 2. Excluir os arquivos no Google Drive
+    if (documentos && documentos.length > 0) {
+      for (const doc of documentos) {
+        if (doc.drive_id) {
+          try {
+            await deleteFileFromDrive(doc.drive_id);
+          } catch (e) {
+            console.error(`Falha ao excluir o arquivo ${doc.drive_id} do Drive, ignorando...`, e);
+          }
+        }
+      }
+    }
+
+    // 3. Excluir o projeto do Supabase (documentos serão apagados por CASCADE)
     const { error } = await supabaseAdmin.from('projetos').delete().eq('id', id);
 
     if (error) throw error;

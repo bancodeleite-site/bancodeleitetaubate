@@ -38,7 +38,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 text-[#2B6B43]">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 text-primary">
         <p className="font-semibold text-lg">Carregando painel...</p>
       </div>
     );
@@ -53,7 +53,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
       {authenticated && (
         <header className="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center shadow-sm">
-          <h1 className="text-xl font-bold text-[#2B6B43]">Painel Administrativo BLH</h1>
+          <h1 className="text-xl font-bold text-primary">Painel Administrador</h1>
           <button 
             onClick={() => supabase.auth.signOut()}
             className="text-sm font-medium text-gray-600 hover:text-red-600 transition-colors"

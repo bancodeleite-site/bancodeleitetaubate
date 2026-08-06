@@ -68,7 +68,7 @@ export default function ProjectManager({ projetos, onUpdate, onSelectProject }: 
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="flex items-center gap-2 px-4 py-2 bg-[#2B6B43] text-white text-sm font-semibold rounded-lg hover:bg-[#205132] transition-colors shadow-sm"
+          className="flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-dark transition-colors shadow-sm"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -79,7 +79,7 @@ export default function ProjectManager({ projetos, onUpdate, onSelectProject }: 
 
       {/* Formulário de Criação (expansível) */}
       {showForm && (
-        <div className="bg-white p-6 rounded-xl border border-[#2B6B43]/20 shadow-sm">
+        <div className="bg-white p-6 rounded-xl border border-primary/20 shadow-sm">
           <h3 className="text-base font-bold text-gray-900 mb-4">Criar Novo Projeto</h3>
           <form onSubmit={handleCreate} className="flex flex-wrap gap-4 items-end">
             <div className="flex-1 min-w-[220px]">
@@ -136,7 +136,7 @@ export default function ProjectManager({ projetos, onUpdate, onSelectProject }: 
               <button
                 type="submit"
                 disabled={loading}
-                className="px-5 py-2 bg-[#2B6B43] text-white text-sm font-semibold rounded-lg hover:bg-[#205132] transition-colors disabled:opacity-70"
+                className="px-5 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-70"
               >
                 {loading ? 'Salvando...' : 'Criar Projeto'}
               </button>
@@ -161,15 +161,15 @@ export default function ProjectManager({ projetos, onUpdate, onSelectProject }: 
             <button
               key={p.id}
               onClick={() => onSelectProject(p)}
-              className="group text-left bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:border-[#2B6B43] hover:shadow-md transition-all duration-200 flex flex-col gap-3"
+              className="group text-left bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:border-primary hover:shadow-md transition-all duration-200 flex flex-col gap-3"
             >
               <div className="flex justify-between items-start gap-2">
-                <h3 className="font-bold text-gray-900 text-sm leading-snug group-hover:text-[#2B6B43] transition-colors">
+                <h3 className="font-bold text-gray-900 text-sm leading-snug group-hover:text-primary transition-colors">
                   {p.nome}
                 </h3>
                 <span className={`flex-shrink-0 text-xs font-bold px-2 py-0.5 rounded-full ${
                   p.status === 'ativo'
-                    ? 'bg-[#E4F2E7] text-[#2B6B43]'
+                    ? 'bg-primary-light text-primary'
                     : 'bg-gray-100 text-gray-500'
                 }`}>
                   {p.status === 'ativo' ? 'Ativo' : 'Encerrado'}
@@ -179,7 +179,7 @@ export default function ProjectManager({ projetos, onUpdate, onSelectProject }: 
                 Início: {new Date(p.data_inicio).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                 {p.data_fim && ` · Fim: ${new Date(p.data_fim).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}`}
               </div>
-              <div className="flex items-center gap-1 text-xs font-semibold text-[#2B6B43] opacity-0 group-hover:opacity-100 transition-opacity mt-auto pt-1 border-t border-gray-100">
+              <div className="flex items-center gap-1 text-xs font-semibold text-primary opacity-0 group-hover:opacity-100 transition-opacity mt-auto pt-1 border-t border-gray-100">
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>

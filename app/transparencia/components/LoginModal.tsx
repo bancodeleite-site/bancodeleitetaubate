@@ -50,7 +50,7 @@ export default function LoginModal({ isOpen, onClose }: { isOpen: boolean, onClo
         </button>
 
         <div className="text-center mb-8 mt-2">
-          <h2 className="text-2xl font-bold text-[#2B6B43] font-serif mb-2">Acesso Restrito</h2>
+          <h2 className="text-2xl font-bold text-primary font-display mb-2">Acesso Restrito</h2>
           <p className="text-gray-500 text-sm">Faça login para gerenciar os documentos de transparência.</p>
         </div>
 
@@ -61,7 +61,7 @@ export default function LoginModal({ isOpen, onClose }: { isOpen: boolean, onClo
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2B6B43] focus:border-[#2B6B43] outline-none transition-all"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
               placeholder="admin@ong.com.br"
               required
             />
@@ -73,7 +73,7 @@ export default function LoginModal({ isOpen, onClose }: { isOpen: boolean, onClo
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2B6B43] focus:border-[#2B6B43] outline-none transition-all"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
               placeholder="••••••••"
               required
             />
@@ -88,7 +88,7 @@ export default function LoginModal({ isOpen, onClose }: { isOpen: boolean, onClo
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#2B6B43] hover:bg-[#205132] text-white font-semibold py-2.5 rounded-lg transition-colors shadow-sm disabled:opacity-70 flex justify-center"
+            className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-2.5 rounded-lg transition-colors shadow-sm disabled:opacity-70 flex justify-center"
           >
             {loading ? (
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

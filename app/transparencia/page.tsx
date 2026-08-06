@@ -106,7 +106,7 @@ export default function TransparenciaPage() {
           <div className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Selecione o ano</div>
           {anosDisponiveis.map(ano => (
             <button key={ano} onClick={() => go({type:'ano', value:ano.toString(), label:ano.toString()})}
-              className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-[#2B6B43] transition-colors text-left font-semibold text-gray-900">
+              className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-primary transition-colors text-left font-semibold text-gray-900">
               {ano}
               <Chevron />
             </button>
@@ -125,15 +125,15 @@ export default function TransparenciaPage() {
         <div className="flex flex-col gap-3">
           <div className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Status dos Projetos</div>
           <button onClick={() => go({type:'status', value:'ativo', label:'Projetos Ativos'})}
-            className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-[#2B6B43] transition-colors text-left group">
-            <span className="font-semibold text-gray-900 group-hover:text-[#2B6B43]">Projetos Ativos</span>
+            className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-primary transition-colors text-left group">
+            <span className="font-semibold text-gray-900 group-hover:text-primary">Projetos Ativos</span>
             <div className="flex items-center gap-3">
               <span className="text-xs text-gray-500 font-medium">{ativos.length} projeto(s)</span>
               <Chevron />
             </div>
           </button>
           <button onClick={() => go({type:'status', value:'encerrado', label:'Projetos Encerrados'})}
-            className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-[#2B6B43] transition-colors text-left group">
+            className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-primary transition-colors text-left group">
             <span className="font-semibold text-gray-900">Projetos Encerrados</span>
             <div className="flex items-center gap-3">
               <span className="text-xs text-gray-500 font-medium">{encerrados.length} projeto(s)</span>
@@ -156,7 +156,7 @@ export default function TransparenciaPage() {
           {lista.length === 0 && <div className="text-gray-500 italic py-4">Nenhum projeto nesta categoria.</div>}
           {lista.map(p => (
             <button key={p.id} onClick={() => go({type:'projeto', value:p.nome, label:p.nome})}
-              className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-[#2B6B43] transition-colors text-left group">
+              className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-primary transition-colors text-left group">
               <div className="flex flex-col">
                 <span className="font-semibold text-gray-900">{p.nome}</span>
                 {p.anos.length > 1 && <span className="text-xs text-gray-500 mt-0.5">Atravessa {p.anos[0]}–{p.anos[p.anos.length-1]}</span>}
@@ -184,7 +184,7 @@ export default function TransparenciaPage() {
           <div className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Tipo de Documento</div>
           
           <button onClick={() => go({type:'tipo', value:'termo', label:'Termos / Planos de Trabalho'})}
-            className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-[#2B6B43] transition-colors text-left group">
+            className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-primary transition-colors text-left group">
             <span className="font-semibold text-gray-900">Termo de Colaboração e Plano de Trabalho</span>
             <div className="flex items-center gap-3">
               <span className="text-xs text-gray-500 font-medium">{qtdTermos} arq.</span>
@@ -193,7 +193,7 @@ export default function TransparenciaPage() {
           </button>
           
           <button onClick={() => go({type:'tipo', value:'circunstanciado', label:'Relatórios Circunstanciados'})}
-            className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-[#2B6B43] transition-colors text-left group">
+            className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-primary transition-colors text-left group">
             <span className="font-semibold text-gray-900">Relatório Circunstanciado</span>
             <div className="flex items-center gap-3">
               <span className="text-xs text-gray-500 font-medium">{qtdCircunstanciado} arq.</span>
@@ -202,7 +202,7 @@ export default function TransparenciaPage() {
           </button>
           
           <button onClick={() => go({type:'tipo', value:'financeiro', label:'Relatórios Financeiros'})}
-            className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-[#2B6B43] transition-colors text-left group">
+            className="flex items-center justify-between w-full p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-primary transition-colors text-left group">
             <span className="font-semibold text-gray-900">Relatório Financeiro</span>
             <div className="flex items-center gap-3">
               <span className="text-xs text-gray-500 font-medium">{qtdFinanceiro} arq.</span>
@@ -227,7 +227,7 @@ export default function TransparenciaPage() {
             {docsDoTipo.map(doc => (
               <div key={doc.id} className="p-5 bg-white border border-gray-200 rounded-xl shadow-sm flex flex-col items-start gap-3">
                 <span className="font-bold text-gray-900">{doc.nome_arquivo}</span>
-                <a href={doc.drive_url} target="_blank" rel="noreferrer" className="text-sm font-bold bg-[#2B6B43] text-white px-4 py-2 rounded-full hover:bg-[#205132] transition-colors">
+                <a href={doc.drive_url} target="_blank" rel="noreferrer" className="text-sm font-bold bg-primary text-white px-4 py-2 rounded-full hover:bg-primary-dark transition-colors">
                   Visualizar documento ↗
                 </a>
               </div>
@@ -250,8 +250,8 @@ export default function TransparenciaPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {mesesArray.map(m => (
               <button key={`${m.mes}-${m.ano}`} onClick={() => go({type:'mes', value:`${m.mes}|${m.ano}`, label:`${MES_ABREV[m.mes.toString()]}/${m.ano}`})}
-                className="flex flex-col items-start p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-[#2B6B43] transition-colors group">
-                <span className="font-bold text-gray-900 group-hover:text-[#2B6B43]">{MES_ABREV[m.mes.toString()]}</span>
+                className="flex flex-col items-start p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-primary transition-colors group">
+                <span className="font-bold text-gray-900 group-hover:text-primary">{MES_ABREV[m.mes.toString()]}</span>
                 <span className="text-xs text-gray-500">{m.ano}</span>
               </button>
             ))}
@@ -275,7 +275,7 @@ export default function TransparenciaPage() {
                 <div className="font-bold text-gray-900 text-base">{doc.nome_arquivo}</div>
                 <div className="text-sm text-gray-500 mt-1">{MES_FULL[mes]} {ano}</div>
               </div>
-              <a href={doc.drive_url} target="_blank" rel="noreferrer" className="mt-2 text-sm font-bold bg-[#2B6B43] text-white px-5 py-2.5 rounded-full hover:bg-[#205132] transition-colors shadow-sm">
+              <a href={doc.drive_url} target="_blank" rel="noreferrer" className="mt-2 text-sm font-bold bg-primary text-white px-5 py-2.5 rounded-full hover:bg-primary-dark transition-colors shadow-sm">
                 Visualizar documento ↗
               </a>
             </div>
@@ -292,7 +292,7 @@ export default function TransparenciaPage() {
       <div className="max-w-3xl mx-auto px-5 pt-10">
         
         <div className="mb-6">
-          <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-[#2B6B43] transition-colors">
+          <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-primary transition-colors">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
@@ -301,10 +301,10 @@ export default function TransparenciaPage() {
         </div>
 
         <div className="flex justify-between items-start mb-2">
-          <h1 className="text-3xl font-serif font-bold text-[#2B6B43]">Transparência</h1>
+          <h1 className="text-3xl font-display font-bold text-primary">Transparência</h1>
           <button 
             onClick={() => setIsLoginModalOpen(true)}
-            className="text-xs font-semibold text-[#2B6B43] bg-[#E4F2E7] hover:bg-[#d1e8d6] px-3 py-1.5 rounded-full transition-colors flex items-center gap-1"
+            className="text-xs font-semibold text-primary bg-primary-light hover:bg-primary/20 px-3 py-1.5 rounded-full transition-colors flex items-center gap-1"
           >
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -317,7 +317,7 @@ export default function TransparenciaPage() {
 
         {/* Breadcrumb */}
         <div className="flex flex-wrap items-center gap-2 mb-8 pb-4 border-b border-gray-200 text-sm">
-          <button onClick={() => setPath([])} className={`font-semibold transition-colors ${path.length === 0 ? 'text-gray-900 cursor-default' : 'text-[#2B6B43] hover:underline'}`}>
+          <button onClick={() => setPath([])} className={`font-semibold transition-colors ${path.length === 0 ? 'text-gray-900 cursor-default' : 'text-primary hover:underline'}`}>
             Início
           </button>
           {path.map((seg, i) => {
@@ -325,7 +325,7 @@ export default function TransparenciaPage() {
             return (
               <div key={i} className="flex items-center gap-2">
                 <span className="text-gray-400">/</span>
-                <button onClick={() => isLast ? null : goTo(i)} className={`font-semibold transition-colors ${isLast ? 'text-gray-900 cursor-default' : 'text-[#2B6B43] hover:underline'}`}>
+                <button onClick={() => isLast ? null : goTo(i)} className={`font-semibold transition-colors ${isLast ? 'text-gray-900 cursor-default' : 'text-primary hover:underline'}`}>
                   {seg.label}
                 </button>
               </div>

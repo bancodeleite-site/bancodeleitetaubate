@@ -46,7 +46,7 @@ function RenameModal({ nome, onConfirm, onCancel }: { nome: string; onConfirm: (
         />
         <div className="flex gap-3 justify-end">
           <button onClick={onCancel} className="px-4 py-2 text-sm font-semibold text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">Cancelar</button>
-          <button onClick={() => onConfirm(value)} className="px-4 py-2 text-sm font-semibold bg-[#2B6B43] text-white rounded-lg hover:bg-[#205132]">Salvar</button>
+          <button onClick={() => onConfirm(value)} className="px-4 py-2 text-sm font-semibold bg-primary text-white rounded-lg hover:bg-primary-dark">Salvar</button>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@ function RenameModal({ nome, onConfirm, onCancel }: { nome: string; onConfirm: (
 
 function DocItem({ doc, onDelete, onRename }: { doc: Documento; onDelete: (id: string) => void; onRename: (id: string, nome: string) => void }) {
   return (
-    <div className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg group hover:border-[#2B6B43]/40 transition-colors">
+    <div className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg group hover:border-primary/40 transition-colors">
       <div className="flex items-center gap-3 min-w-0">
         <svg className="w-4 h-4 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
           <path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" />
@@ -68,7 +68,7 @@ function DocItem({ doc, onDelete, onRename }: { doc: Documento; onDelete: (id: s
           target="_blank"
           rel="noreferrer"
           title="Visualizar"
-          className="p-1.5 text-gray-400 hover:text-[#2B6B43] rounded-md hover:bg-[#E4F2E7] transition-colors"
+          className="p-1.5 text-gray-400 hover:text-primary rounded-md hover:bg-primary-light transition-colors"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -108,6 +108,10 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
 
   // Rename modal
   const [renameDoc, setRenameDoc] = useState<{ id: string; nome: string } | null>(null);
+
+  // Delete project modal
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletingProject, setDeletingProject] = useState(false);
 
   // Upload inline
   const [showUpload, setShowUpload] = useState(false);
@@ -225,6 +229,25 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
     onBack();
   };
 
+  const handleDeleteProject = async () => {
+    setDeletingProject(true);
+    try {
+      const token = await getToken();
+      const res = await fetch(`/api/projetos?id=${projeto.id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) throw new Error('Erro ao excluir projeto');
+      onProjectUpdated();
+      onBack();
+    } catch (err) {
+      console.error(err);
+      alert('Erro ao excluir projeto. Verifique os logs.');
+      setDeletingProject(false);
+      setShowDeleteModal(false);
+    }
+  };
+
   const termos = documentos.filter(d => d.tipo === 'termo');
   const circunstanciados = documentos.filter(d => d.tipo === 'circunstanciado');
   const financeiros = documentos.filter(d => d.tipo === 'financeiro');
@@ -256,6 +279,48 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
 
   return (
     <div className="space-y-6">
+      {/* Delete Project Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden">
+            <div className="p-6">
+              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-4 mx-auto">
+                <svg className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-center text-gray-900 mb-2">Excluir Projeto</h3>
+              <p className="text-sm text-gray-600 text-center mb-4">
+                Tem certeza que deseja excluir o projeto <strong className="text-gray-900">{projeto.nome}</strong> inteiramente?
+              </p>
+              <p className="text-xs text-red-600 text-center bg-red-50 p-3 rounded-lg border border-red-100 font-semibold mb-6">
+                Atenção: Esta ação NÃO PODE ser revertida! Todos os arquivos deste projeto também serão apagados permanentemente do banco de dados e do Google Drive.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowDeleteModal(false)}
+                  disabled={deletingProject}
+                  className="flex-1 py-2.5 px-4 bg-gray-100 text-gray-700 font-semibold rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={handleDeleteProject}
+                  disabled={deletingProject}
+                  className="flex-1 py-2.5 px-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors disabled:opacity-50 flex items-center justify-center"
+                >
+                  {deletingProject ? (
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    'Excluir Definitivamente'
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Rename Modal */}
       {renameDoc && (
         <RenameModal
@@ -268,7 +333,7 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
       {/* Breadcrumb / Back */}
       <button
         onClick={onBack}
-        className="inline-flex items-center gap-2 text-sm font-semibold text-[#2B6B43] hover:underline"
+        className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
       >
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -285,10 +350,10 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
                 <input
                   value={nomeProjeto}
                   onChange={e => setNomeProjeto(e.target.value)}
-                  className="flex-1 text-xl font-bold border-b-2 border-[#2B6B43] outline-none bg-transparent pb-1"
+                  className="flex-1 text-xl font-bold border-b-2 border-primary outline-none bg-transparent pb-1"
                   autoFocus
                 />
-                <button onClick={handleSaveName} disabled={savingName} className="text-sm font-bold text-[#2B6B43] hover:underline disabled:opacity-50">
+                <button onClick={handleSaveName} disabled={savingName} className="text-sm font-bold text-primary hover:underline disabled:opacity-50">
                   {savingName ? 'Salvando...' : 'Salvar'}
                 </button>
                 <button onClick={() => { setEditingName(false); setNomeProjeto(projeto.nome); }} className="text-sm font-bold text-gray-400 hover:underline">
@@ -298,7 +363,7 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
             ) : (
               <div className="flex items-center gap-2 group">
                 <h2 className="text-xl font-bold text-gray-900">{projeto.nome}</h2>
-                <button onClick={() => setEditingName(true)} className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-gray-400 hover:text-[#2B6B43] rounded">
+                <button onClick={() => setEditingName(true)} className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-gray-400 hover:text-primary rounded">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                   </svg>
@@ -312,7 +377,7 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
           </div>
           <div className="flex items-center gap-3">
             <span className={`text-xs font-bold px-3 py-1 rounded-full ${
-              projeto.status === 'ativo' ? 'bg-[#E4F2E7] text-[#2B6B43]' : 'bg-gray-100 text-gray-500'
+              projeto.status === 'ativo' ? 'bg-primary-light text-primary' : 'bg-gray-100 text-gray-500'
             }`}>
               {projeto.status === 'ativo' ? 'Ativo' : 'Encerrado'}
             </span>
@@ -321,6 +386,16 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
               className="text-xs font-semibold text-gray-500 hover:text-gray-700 underline"
             >
               Marcar como {projeto.status === 'ativo' ? 'Encerrado' : 'Ativo'}
+            </button>
+            <div className="w-px h-4 bg-gray-300"></div>
+            <button
+              onClick={() => setShowDeleteModal(true)}
+              className="text-xs font-semibold text-red-500 hover:text-red-700 underline flex items-center gap-1"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              Excluir Projeto
             </button>
           </div>
         </div>
@@ -336,7 +411,7 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
           <div className="flex justify-end">
             <button
               onClick={() => { setShowUpload(!showUpload); setUploadError(''); setUploadSuccess(false); }}
-              className="flex items-center gap-2 px-4 py-2 bg-[#2B6B43] text-white text-sm font-semibold rounded-lg hover:bg-[#205132] transition-colors shadow-sm"
+              className="flex items-center gap-2 px-4 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-dark transition-colors shadow-sm"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={showUpload ? "M6 18L18 6M6 6l12 12" : "M12 4v16m8-8H4"} />
@@ -347,8 +422,8 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
 
           {/* Formulário de Upload Inline */}
           {showUpload && (
-            <div className="bg-[#f0f7f3] border border-[#2B6B43]/20 rounded-xl p-6">
-              <h3 className="text-sm font-bold text-[#2B6B43] mb-4">Novo documento em: <span className="font-normal">{projeto.nome}</span></h3>
+            <div className="bg-[#f0f7f3] border border-primary/20 rounded-xl p-6">
+              <h3 className="text-sm font-bold text-primary mb-4">Novo documento em: <span className="font-normal">{projeto.nome}</span></h3>
               <form onSubmit={handleUploadSubmit} className="space-y-4">
                 <div>
                   <label className="block text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Tipo de Documento</label>
@@ -385,12 +460,12 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
                   <label className="block text-xs font-semibold text-gray-600 mb-1 uppercase tracking-wider">Arquivo PDF</label>
                   <input required type="file" accept="application/pdf" ref={fileInputRef}
                     onChange={e => setUploadFile(e.target.files ? e.target.files[0] : null)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#E4F2E7] file:text-[#2B6B43] hover:file:bg-[#d1e8d6] file:cursor-pointer" />
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-light file:text-primary hover:file:bg-[#d1e8d6] file:cursor-pointer" />
                 </div>
                 {uploadError && <p className="text-red-600 text-sm">{uploadError}</p>}
                 {uploadSuccess && <p className="text-green-600 text-sm font-semibold">✓ Documento enviado com sucesso!</p>}
                 <button type="submit" disabled={uploadLoading}
-                  className="w-full py-2.5 bg-[#2B6B43] text-white font-semibold rounded-lg hover:bg-[#205132] transition-colors disabled:opacity-70 flex justify-center">
+                  className="w-full py-2.5 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-70 flex justify-center">
                   {uploadLoading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div> : 'Fazer Upload'}
                 </button>
               </form>

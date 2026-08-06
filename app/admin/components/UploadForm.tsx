@@ -162,7 +162,7 @@ export default function UploadForm({ projetos, selectedProjetoId: initialProjeto
           accept="application/pdf"
           ref={fileInputRef}
           onChange={e => setFile(e.target.files ? e.target.files[0] : null)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2B6B43] outline-none bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#E4F2E7] file:text-[#2B6B43] hover:file:bg-[#d1e8d6] file:cursor-pointer"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2B6B43] outline-none bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-light file:text-primary hover:file:bg-[#d1e8d6] file:cursor-pointer"
         />
       </div>
 
@@ -172,7 +172,7 @@ export default function UploadForm({ projetos, selectedProjetoId: initialProjeto
       <button 
         type="submit" 
         disabled={loading}
-        className="w-full mt-4 px-5 py-2.5 bg-[#2B6B43] text-white font-semibold rounded-lg hover:bg-[#205132] transition-colors disabled:opacity-70 flex justify-center"
+        className="w-full mt-4 px-5 py-2.5 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-70 flex justify-center"
       >
         {loading ? (
           <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
