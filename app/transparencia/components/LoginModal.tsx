@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 export default function LoginModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,10 +16,16 @@ export default function LoginModal({ isOpen, onClose }: { isOpen: boolean, onClo
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || '';
+    if (!adminEmail) {
+      setError('E-mail do administrador não configurado no sistema.');
+      setLoading(false);
+      return;
+    }
+    
     setLoading(true);
-
     const { error } = await supabase.auth.signInWithPassword({
-      email,
+      email: adminEmail,
       password,
     });
 
@@ -55,18 +60,6 @@ export default function LoginModal({ isOpen, onClose }: { isOpen: boolean, onClo
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">E-mail</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
-              placeholder="admin@ong.com.br"
-              required
-            />
-          </div>
-
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">Senha</label>
             <input

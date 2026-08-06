@@ -313,7 +313,7 @@ export default function TransparenciaPage() {
           </button>
         </div>
         
-        <p className="text-gray-500 mb-8">Navegue pelos documentos oficiais do Banco de Leite Humano.</p>
+        <p className="text-gray-500 mb-8">Navegue pelos documentos oficiais, por aqui.</p>
 
         {/* Breadcrumb */}
         <div className="flex flex-wrap items-center gap-2 mb-8 pb-4 border-b border-gray-200 text-sm">

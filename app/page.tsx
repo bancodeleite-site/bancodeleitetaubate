@@ -298,7 +298,7 @@ const Projects = () => {
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
           className="bg-white rounded-[2rem] shadow-xl shadow-black/5 border border-slate-100 overflow-hidden relative group"
         >
-          <div className="aspect-[2/1] md:aspect-[2.5/1] lg:aspect-[3/1] relative overflow-hidden bg-slate-100">
+          <div className="aspect-[16/9] md:aspect-[2/1] lg:aspect-[2.2/1] relative overflow-hidden bg-slate-100">
             <AnimatePresence initial={false}>
               <motion.div
                 key={activeIndex}
