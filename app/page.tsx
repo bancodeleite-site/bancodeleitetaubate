@@ -681,8 +681,14 @@ const Footer = () => {
              </ul>
           </div>
         </div>
-        <div className="pt-8 border-t border-primary-dark/50 text-center text-sm text-white/70">
+        <div className="pt-8 border-t border-primary-dark/50 text-center text-sm text-white/70 space-y-1">
           <p>© {new Date().getFullYear()} Banco de Leite Humano. Todos os direitos reservados.</p>
+          <p>
+            Plataforma desenvolvida por{' '}
+            <a href="https://www.linkedin.com/in/paulo-henrique-dos-santos-0894902b5" target="_blank" rel="noreferrer" className="text-white font-semibold hover:text-primary-light transition-colors">
+              Paulo Henrique
+            </a>
+          </p>
         </div>
       </div>
     </footer>

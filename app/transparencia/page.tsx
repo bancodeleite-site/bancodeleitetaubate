@@ -356,9 +356,15 @@ export default function TransparenciaPage() {
         </AnimatePresence>
 
         {/* Footer */}
-        <div className="mt-auto pt-8 pb-8 border-t border-gray-200 text-center w-full">
+        <div className="mt-auto pt-8 pb-8 border-t border-gray-200 text-center w-full space-y-1">
           <p className="text-sm text-gray-400">
             © {new Date().getFullYear()} Banco de Leite Humano. Todos os direitos reservados.
+          </p>
+          <p className="text-sm text-gray-400">
+            Plataforma desenvolvida por{' '}
+            <a href="https://www.linkedin.com/in/paulo-henrique-dos-santos-0894902b5" target="_blank" rel="noreferrer" className="text-primary font-semibold hover:text-primary-dark transition-colors">
+              Paulo Henrique
+            </a>
           </p>
         </div>
       </div>
