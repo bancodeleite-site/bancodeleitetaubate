@@ -154,22 +154,61 @@ export default function ProjectDetail({ projeto, onBack, onProjectUpdated }: Pro
     setUploadError('');
     try {
       const token = await getToken();
-      const formData = new FormData();
-      formData.append('id_projeto', projeto.id);
-      formData.append('tipo', uploadTipo);
-      formData.append('nome_arquivo', uploadNome);
-      if (uploadTipo !== 'termo') {
-        formData.append('ano', uploadAno);
-        formData.append('mes', uploadMes);
-      }
-      formData.append('file', uploadFile);
-      const res = await fetch('/api/upload', {
+      
+      // 1. Iniciar Sessão (Pegar URL Direta)
+      const initRes = await fetch('/api/upload/init', {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
-        body: formData
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({ 
+          fileName: uploadFile.name, 
+          mimeType: uploadFile.type 
+        })
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Erro no upload');
+      const initData = await initRes.json();
+      if (!initRes.ok) throw new Error(initData.error || 'Erro ao iniciar upload');
+
+      const { uploadUrl } = initData;
+
+      // 2. Fazer Upload Direto para o Google Drive
+      const uploadRes = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': uploadFile.type
+        },
+        body: uploadFile
+      });
+
+      if (!uploadRes.ok) {
+        const errText = await uploadRes.text();
+        throw new Error(`Erro ao enviar arquivo para o Google: ${uploadRes.status} - ${errText}`);
+      }
+      
+      const driveData = await uploadRes.json();
+      const fileId = driveData.id;
+      if (!fileId) throw new Error('Google Drive não retornou ID do arquivo');
+
+      // 3. Finalizar Upload (Tornar público e salvar no banco)
+      const completeRes = await fetch('/api/upload/complete', {
+        method: 'POST',
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({
+          fileId,
+          id_projeto: projeto.id,
+          tipo: uploadTipo,
+          nome_arquivo: uploadNome,
+          ano: uploadTipo !== 'termo' ? uploadAno : null,
+          mes: uploadTipo !== 'termo' ? uploadMes : null,
+        })
+      });
+      
+      const completeData = await completeRes.json();
+      if (!completeRes.ok) throw new Error(completeData.error || 'Erro ao finalizar upload');
       setUploadSuccess(true);
       setUploadNome('');
       setUploadFile(null);
