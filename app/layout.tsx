@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import { Outfit, Manrope } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 
 const outfit = Outfit({
@@ -24,6 +25,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="pt-BR" className={`scroll-smooth ${outfit.variable} ${manrope.variable}`}>
       <body suppressHydrationWarning className="font-sans text-slate-800 bg-[#fbfbfd] antialiased selection:bg-primary/20 selection:text-primary-dark">
         {children}
+        <Analytics />
       </body>
     </html>
   );
