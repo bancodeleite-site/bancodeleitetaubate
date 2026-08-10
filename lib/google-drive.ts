@@ -74,3 +74,63 @@ export async function deleteFileFromDrive(fileId: string) {
     throw error;
   }
 }
+
+export async function createResumableUploadSession(fileName: string, mimeType: string, origin: string = '*') {
+  if (!FOLDER_ID) throw new Error("GOOGLE_DRIVE_FOLDER_ID is not configured");
+
+  // Get raw access token
+  const tokenObj = await oauth2Client.getAccessToken();
+  const token = tokenObj?.token;
+  if (!token) throw new Error("Failed to get Google Access Token");
+
+  const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'X-Upload-Content-Type': mimeType,
+      'Origin': origin,
+    },
+    body: JSON.stringify({
+      name: fileName,
+      parents: [FOLDER_ID]
+    })
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Falha ao criar sessão de upload: ${res.status} - ${errorText}`);
+  }
+
+  // A API do Google Drive retorna a URL de upload na Location (Header)
+  const uploadUrl = res.headers.get('Location');
+  if (!uploadUrl) {
+    throw new Error('A API do Google não retornou a URL de upload (Location)');
+  }
+
+  return uploadUrl;
+}
+
+export async function finalizeUploadAndGetLink(fileId: string) {
+  try {
+    // Torna o arquivo público (Qualquer pessoa com o link - Leitor)
+    await drive.permissions.create({
+      fileId: fileId,
+      requestBody: {
+        role: 'reader',
+        type: 'anyone',
+      },
+    });
+
+    // Busca o link público
+    const response = await drive.files.get({
+      fileId: fileId,
+      fields: 'webViewLink',
+    });
+
+    return response.data.webViewLink;
+  } catch (error) {
+    console.error("Erro ao finalizar o upload:", error);
+    throw error;
+  }
+}
