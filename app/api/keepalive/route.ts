@@ -2,11 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 
 export async function GET(req: NextRequest) {
-  // Protege a rota com um token secreto
+  // Protege a rota com o token secreto manual OU com a variável oficial do Vercel Cron
   const url = new URL(req.url);
-  const secret = url.searchParams.get('secret');
+  const secretParam = url.searchParams.get('secret');
+  const authHeader = req.headers.get('authorization');
 
-  if (secret !== process.env.KEEPALIVE_SECRET) {
+  if (
+    secretParam !== process.env.KEEPALIVE_SECRET &&
+    authHeader !== `Bearer ${process.env.CRON_SECRET}`
+  ) {
     return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
   }
 
