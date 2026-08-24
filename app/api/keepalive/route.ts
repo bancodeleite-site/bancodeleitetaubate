@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
+import { supabaseAdmin } from '@/lib/supabase';
 
 export async function GET(req: NextRequest) {
   // Protege a rota com o token secreto manual OU com a variável oficial do Vercel Cron
@@ -27,15 +28,18 @@ export async function GET(req: NextRequest) {
     // Chamada mínima: lista 1 arquivo só para "usar" o token
     await drive.files.list({ pageSize: 1, fields: 'files(id)' });
 
-    console.log(`[Keepalive] Google Drive token renovado com sucesso em ${new Date().toISOString()}`);
+    // Chamada mínima: bater no Supabase para zerar a contagem de hibernação
+    await supabaseAdmin.from('documentos').select('id').limit(1);
+
+    console.log(`[Keepalive] Serviços do Drive e Supabase renovados em ${new Date().toISOString()}`);
 
     return NextResponse.json({
       success: true,
-      message: 'Token renovado com sucesso',
+      message: 'Tokens e conexões renovados com sucesso',
       timestamp: new Date().toISOString()
     });
   } catch (error: any) {
-    console.error('[Keepalive] Erro ao renovar token:', error.message);
+    console.error('[Keepalive] Erro ao renovar tokens:', error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
