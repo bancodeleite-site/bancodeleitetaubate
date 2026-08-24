@@ -3,15 +3,11 @@ import { google } from 'googleapis';
 import { supabaseAdmin } from '@/lib/supabase';
 
 export async function GET(req: NextRequest) {
-  // Protege a rota com o token secreto manual OU com a variável oficial do Vercel Cron
+  // Protege a rota com o token secreto
   const url = new URL(req.url);
-  const secretParam = url.searchParams.get('secret');
-  const authHeader = req.headers.get('authorization');
+  const secret = url.searchParams.get('secret');
 
-  if (
-    secretParam !== process.env.KEEPALIVE_SECRET &&
-    authHeader !== `Bearer ${process.env.CRON_SECRET}`
-  ) {
+  if (secret !== process.env.KEEPALIVE_SECRET) {
     return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
   }
 

@@ -1,7 +1,7 @@
 {
   "crons": [
     {
-      "path": "/api/keepalive",
+      "path": "/api/keepalive?secret=ping-pong-banco-de-leite-12431917",
       "schedule": "0 0 */6 * *"
     }
   ]
