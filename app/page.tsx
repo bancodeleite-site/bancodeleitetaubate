@@ -61,8 +61,9 @@ const Header = () => {
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-4' : 'bg-white/90 backdrop-blur-sm border-b border-white/20 py-4 shadow-sm'}`}>
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center relative z-50">
-            <Image src="/images/logo.png" alt="Logo Banco de Leite" width={264} height={78} className="object-contain h-20 w-auto" priority />
+          <Link href="/" className="flex items-center gap-4 relative z-50">
+            <Image src="/images/logo_CasaDaCrianca.png" alt="Logo Casa da Criança" width={180} height={78} className="object-contain h-16 w-auto" priority />
+            <Image src="/images/logo_BancoDeLeite.png" alt="Logo Banco de Leite Humano" width={180} height={78} className="object-contain h-20 w-auto" priority />
           </Link>
 
           {/* Desktop Nav */}
@@ -139,8 +140,7 @@ const Hero = () => {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <h1 className="text-6xl md:text-[80px] font-display font-bold leading-[1.05] text-white mb-6 drop-shadow-lg">
-            Banco de <br/>
-            Leite Humano
+            Casa da Criança
           </h1>
           
           <p className="text-lg md:text-xl text-white/95 mb-10 max-w-[700px] mx-auto leading-relaxed drop-shadow-md font-medium">
@@ -224,10 +224,10 @@ const About = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           >
-            <h2 className="text-4xl md:text-5xl font-display font-semibold text-primary mb-8 tracking-tight">Sobre o Banco de Leite</h2>
+            <h2 className="text-4xl md:text-5xl font-display font-semibold text-primary mb-8 tracking-tight">Sobre a Casa da Criança</h2>
             <div className="space-y-6 text-slate-600 text-lg leading-relaxed">
               <p>
-                Fundado em 17 de dezembro de 1943, o Serviço de Proteção à Criança (SPC) nasceu da iniciativa de um grupo de beneméritos de Taubaté, liderados pelo médico e filantropo Dr. Raul Guisard, tornando-se uma referência no atendimento à infância e às famílias da região.
+                Fundada em 17 de dezembro de 1943, o Serviço de Proteção à Criança (SPC) nasceu da iniciativa de um grupo de beneméritos de Taubaté, liderados pelo médico e filantropo Dr. Raul Guisard, tornando-se uma referência no atendimento à infância e às famílias da região.
               </p>
               <p>
                 Na década de 1940, a instituição recebeu da Prefeitura de Taubaté um terreno onde, com o apoio da Diretoria, associados e comunidade, construiu sua sede própria. Nesse espaço foi implantado o primeiro Posto de Puericultura de Taubaté e região, oferecendo atendimento médico, social e assistencial pioneiro voltado à saúde materno-infantil.
@@ -251,7 +251,7 @@ const Projects = () => {
   const projects = [
     {
       title: "Educação e Apoio às Famílias Doadoras",
-      desc: "Nossa equipe especializada orienta um grupo de mães sobre a importância da doação de leite humano e os cuidados no processo de coleta e armazenamento. O Banco de Leite Humano de Taubaté oferece todo o suporte necessário para que esse gesto de amor chegue com segurança aos bebês que mais precisam. 💧 Cada gota doada pode salvar uma vida.",
+      desc: "Nossa equipe especializada orienta um grupo de mães sobre a importância da doação de leite humano e os cuidados no processo de coleta e armazenamento. O Banco de Leite Humano de Taubaté oferece todo o suporte necessário para que esse gesto de amor chegue com segurança aos bebês que mais precisam. Cada gota doada pode salvar uma vida.",
       img: "/images/carrossel-1.jpg"
     },
     {
@@ -631,10 +631,11 @@ const Footer = () => {
   return (
     <footer className="bg-primary text-white py-20 border-t border-primary-dark">
       <div className="container mx-auto px-6 max-w-7xl">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
-          <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center mb-6 bg-white p-3 rounded-2xl w-fit">
-              <Image src="/images/logo.png" alt="Logo Banco de Leite" width={264} height={78} className="object-contain h-16 w-auto" />
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-16">
+          <div className="lg:col-span-2">
+            <Link href="/" className="flex items-center gap-3 mb-6 bg-white p-3 rounded-2xl w-fit">
+              <Image src="/images/logo_CasaDaCrianca.png" alt="Logo Casa da Criança" width={200} height={68} className="object-contain h-14 w-auto" />
+              <Image src="/images/logo_BancoDeLeite.png" alt="Logo Banco de Leite Humano" width={200} height={68} className="object-contain h-14 w-auto" />
             </Link>
             <p className="text-white/80 text-sm leading-relaxed mb-6">
               Um legado de amor que começou em 1943, cuidando de gerações com pioneirismo em saúde infantil e maternidade.
